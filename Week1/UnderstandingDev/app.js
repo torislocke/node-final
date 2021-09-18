@@ -1,5 +1,5 @@
 const http = require('http');  // import server from node.js global module
-const routes = require('./app-routes');
+const routes = require('./routes');
 
 const server = http.createServer(routes);
 

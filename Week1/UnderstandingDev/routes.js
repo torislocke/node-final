@@ -11,19 +11,19 @@ const method = req.method;
     res.write('</form>');
     res.write('</body>');
     res.write('</html>');
-    // exit out of function with res.end
+    // exit out of function with res.end to prevent further code execution
     return res.end();
-
    }
+
    if (url === '/message' && method === 'POST') {
     const body = []; // create an empty array
-    req.on('data', (chunk) => {  // function to be performed for incoming data
+    req.on('data', chunk => {  // function to be performed for incoming data
     console.log(chunk);
     body.push(chunk);  // fill empty array with data
     });  
     return req.on('end', () => {
         const parsedBody = Buffer.concat(body).toString();
-        const message = parsedBody.split('='[1]);
+        const message = parsedBody.split('='[1]); // store the data element index 1
         fs.writeFile('message.txt', message, (err) => { // writeFileSync blocks code use writeFile
             res.statusCode = 302; 
             res.setHeader('Location', '/'); // redirect the request back to / with setHeader
