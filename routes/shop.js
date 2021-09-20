@@ -1,14 +1,16 @@
 const path = require('path');
+
 const express = require('express');
 
+const rootDir = require('../util/path');
+const adminData = require('./admin');
 
-const rootDir = require('../utils/path');
-const router = express.Router(); 
+const router = express.Router();
 
-
-router.get('/',(req, res, next) => {
-    console.log('second middleware line')
-    res.sendFile(path.join(rootDir, 'views', 'shop.html')); //path join detects op system
+router.get('/', (req, res, next) => {
+  npconsole.log('shop.js', adminData.products);
+  const products = adminData.products;
+  res.render('shop', {prods: products, docTitle: 'Shop'}); //pug version
 });
 
 module.exports = router;
