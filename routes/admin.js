@@ -6,18 +6,23 @@ const rootDir = require('../utils/path');
 
 const router = express.Router(); 
 
-const product = [];  // create array object
+const products = [] // create an empty products array
 
 router.get('/add-product', (req, res, next) => {
-    res.sendFile(path.join(rootDir, 'views', 'add-product.html')); //path join detects op system
-     // sends a response using express send function
-    // res.send('<form action="/product" method="POST"><input type="text" name="title"><button type="submit">Add Product</button></form>');
-});
+    res.render('add-product', {
+      pageTitle: 'Add Product',
+      path: '/admin/add-product',
+      formsCSS: true,
+      productCSS: true,
+      activeAddProduct: true
+    });
+  });
 // app.post only triggers on post requests vs. app.get triggers on get requests
 router.post('/add-product', (req, res, next) => {
-    products.push({title: req.body.title})
-    res.redirect('/'); // redirect the url to /
-})
-
-exports.routes = router;
-exports.products = product;
+    products.push({ title: req.body.title });
+    res.redirect('/');
+  });
+  
+  exports.routes = router;
+  exports.products = products;
+  

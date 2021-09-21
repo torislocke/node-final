@@ -11,13 +11,13 @@ const app = express(); // run express as a function as pass to createServer as h
 // app.set('views', 'views'); //direct to views folder 
 
 // ****  pug configuration for displaying views
-app.set('view engine', 'pug'); // register pug as view engine
+app.set('view engine', 'ejs'); // register pug as view engine
 app.set('views', 'views'); // this does not need to be set as views is the default
 
 const adminData = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
-app.use(bodyParser.urlencoded({extended: false})); // middleware function to parse body
+app.use(bodyParser.urlencoded({ extended: false })); // middleware function to parse body
 app.use(express.static(path.join(__dirname, 'public')));  // read access to public folder
 
 

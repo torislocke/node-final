@@ -34,3 +34,14 @@ button:active {
     background-color: red;
 
 }
+
+.card__image img {
+    max-width: 70%;
+    margin: auto;
+}
+
+.product-item {
+    display: block;
+    margin: auto;
+    max-width: 500px;
+}

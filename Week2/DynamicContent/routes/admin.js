@@ -9,8 +9,12 @@ const router = express.Router();
 const products = [] // create an empty products array
 
 router.get('/add-product', (req, res, next) => {
-    console.log('second middleware line');
-    res.render('add-product', {pageTitle: 'Add Product', path: '/admin/add-product'}); 
+    res.render('add-product', {
+        pageTitle: 'Add Product', 
+        path: '/admin/add-product',
+        formsCSS: true,
+        productCSS: true,
+        activeAddProduct: true});
 
 });
 // app.post only triggers on post requests vs. app.get triggers on get requests
