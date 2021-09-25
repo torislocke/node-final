@@ -7,8 +7,8 @@ const expressHbs = require('express-handlebars');
 
 const app = express(); // run express as a function as pass to createServer as handler
 
-app.engine('handlebars', expressHbs());  //intialize the view engine
-app.set('view engin', 'handlebars');
+app.engine('hbs', expressHbs({layoutsDir: 'views/layouts/', defaultLayout: 'main-layout', extname: 'hbs'}));  //intialize the view engine
+app.set('view engine', 'hbs');
 app.set('views', 'views');
 
 const adminData = require('./routes/admin')

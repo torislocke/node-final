@@ -1,8 +1,4 @@
-<%- include('includes/head.ejs') %>
-</head>
 
-<body>
-    <%- include('includes/navigation.ejs') %>
     <main>
         <% if (prods.length > 0) { %>
             <div class="grid">
@@ -24,10 +20,9 @@
                             <button class="btn">Add to Cart</button>
                         </div>
                     </article>
-                    <% } %>
+                    {{/each}}
             </div>
-            <% } else { %>
-                <h1>No Products Found</h1>
-                <% } %>
+          {{ else }}
+          <h2>No Products Found</h2>
+          {{/if}}
     </main>
-    <%- include('includes/end.ejs') %>

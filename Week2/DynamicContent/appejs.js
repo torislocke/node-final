@@ -1,13 +1,13 @@
 const path = require('path');
 
 // third party installs
-const express = require('express'); // import express framework for utilities
+const express = require('express'); // import express framework for utilities The express() function is a top-level function exported by the express module.
 const bodyParser = require('body-parser');
 
 const app = express(); // run express as a function as pass to createServer as handler
 
-app.set('view engine', 'ejs');
-app.set('views', 'views');
+app.set('view engine', 'ejs'); // app.set establishes global dynamic template engine
+app.set('views', 'views'); // tells express where to find the dynamic views
 
 const adminData = require('./routes/admin')
 const shopRoutes = require('./routes/shop');
