@@ -65,10 +65,12 @@ module.exports = class Product {
   static fetchAll(cb) {
     getProductsFromFile(cb);
   }
-
+// locate product by id from parsed array of objects
   static findById(id, cb) {
     getProductsFromFile(products => {
+      // javascript method of find to return item from array that matches id with implicit return
       const product = products.find(p => p.id === id);
+      // call back with product
       cb(product);
     });
   }

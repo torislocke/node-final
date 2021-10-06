@@ -1,6 +1,8 @@
-const Product = require('../models/product');
+const Product = require('../models/product'); // import product class
 const Cart = require('../models/cart');
 
+
+// retrieve all products
 exports.getProducts = (req, res, next) => {
   Product.fetchAll(products => {
     res.render('shop/product-list', {
@@ -11,6 +13,7 @@ exports.getProducts = (req, res, next) => {
   });
 };
 
+// retrieve a single product
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
   Product.findById(prodId, product => {
