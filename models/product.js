@@ -21,7 +21,7 @@ const productSchema = new Schema({
   },
   userId: {
     type: Schema.Types.ObjectId,
-    ref: 'User', // refer to user model ongoose takes a string
+    ref: 'User',
     required: true
   }
 });
