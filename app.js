@@ -1,14 +1,18 @@
+// All required third party and node modules
 const path = require("path");
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
-
 const errorController = require("./controllers/error");
 const User = require("./models/user");
+const cors = require('cors')
 
+// all application to run on Heroku or localhost:5000
+const PORT = process.env.PORT || 5000; 
+
+// connect to Mongo Database
 const MONGODB_URI =
   "mongodb+srv://tlocke:MongoDB12@cluster0.sd8ux.mongodb.net/ecommerce?retryWrites=true&w=majority";
 const app = express();
@@ -16,6 +20,19 @@ const store = new MongoDBStore({
   uri: MONGODB_URI,
   collection: "sessions",
 });
+
+const corsOptions = {
+  origin: "https://ecommerce-functional.herokuapp.com/",
+  optionsSuccessStatus: 200
+};
+
+const options = {
+  useUnifiedTopology: true,
+  // useNewUrlParser: true,
+  // useCreateIndex: true,
+  // useFindAndModify: false,
+  family: 4
+};
 
 app.set("view engine", "ejs");
 app.set("views", "views");
@@ -26,6 +43,8 @@ const authRoutes = require("./routes/auth");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(cors(corsOptions));
+
 app.use(
   session({
     secret: "my secret",
@@ -54,7 +73,7 @@ app.use(authRoutes);
 app.use(errorController.get404);
 
 mongoose
-  .connect(MONGODB_URI)
+  .connect(MONGODB_URI, options)
   .then((result) => {
     User.findOne().then((user) => {
       if (!user) {
@@ -68,11 +87,8 @@ mongoose
         user.save();
       }
     });
-    let port = process.env.PORT;
-    if (port == null || port == "") {
-      port = 5000;
-    }
-    app.listen(port);
+
+    app.listen(PORT, () => console.log(`Listening on ${PORT}`)); 
   })
   .catch((err) => {
     console.log(err);
