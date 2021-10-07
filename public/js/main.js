@@ -15,6 +15,7 @@ function menuToggleClickHandler() {
 backdrop.addEventListener('click', backdropClickHandler);
 menuToggle.addEventListener('click', menuToggleClickHandler);
 
+
 mongoose
   .connect(
     MONGODB_URL, options
