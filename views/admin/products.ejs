@@ -5,8 +5,8 @@
     <body>
         <%- include('../includes/navigation.ejs') %>
 
-            <main>
-                <% if (prods.length > 0) { %>
+            <main class="main">
+                <% if (prods.length> 0) { %>
                     <div class="grid">
                         <% for (let product of prods) { %>
                             <article class="card product-item">
@@ -33,7 +33,6 @@
                                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                         <button class="btn" type="submit">Delete</button>
                                     </form>
-
                                 </div>
                             </article>
                             <% } %>
@@ -43,4 +42,3 @@
                         <% } %>
             </main>
             <%- include('../includes/end.ejs') %>
-            
