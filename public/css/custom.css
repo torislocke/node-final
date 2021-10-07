@@ -4,12 +4,17 @@
 #errorPage{
     background-color: black !important;
     color: white;
+    margin: auto;
+    text-align: center;
 
 }
 .errorContainer {
     padding-top: 4rem;
 }
 
+#homePage-button {
+    margin-top: 20px;
+}
 #homePage-button:hover {
     transform: scale(1.2);
 }
