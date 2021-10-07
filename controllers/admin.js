@@ -77,8 +77,8 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
   Product.find()
-    // .select('title price -_id')
-    // .populate('userId', 'name')
+    // .select('title price -_id') // Mongoose select allows you to define which fields
+    // .populate('userId', 'name') // Mongoose can bring back all data with populate
     .then(products => {
       console.log(products);
       res.render('admin/products', {
