@@ -14,6 +14,7 @@
         <form class="login-form" action="/login" method="POST">
             <div class="form-control">
                 <label for="email">E-Mail</label>
+                 <!-- // set validation class for error array with an error of email -->
                 <input 
                     class="<%= validationErrors.find(e => e.param === 'email') ? 'invalid' : '' %>"
                     type="email" 
@@ -28,7 +29,7 @@
                     type="password" 
                     name="password" 
                     id="password" 
-                    value="<%= oldInput.password %>">
+                    value="<%= oldInput.password %>"> 
             </div>
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button class="btn" type="submit">Login</button>

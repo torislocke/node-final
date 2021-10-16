@@ -56,21 +56,6 @@ exports.postAddProduct = (req, res, next) => {
       res.redirect('/admin/products');
     })
     .catch(err => {
-      // return res.status(500).render('admin/edit-product', {
-      //   pageTitle: 'Add Product',
-      //   path: '/admin/add-product',
-      //   editing: false,
-      //   hasError: true,
-      //   product: {
-      //     title: title,
-      //     imageUrl: imageUrl,
-      //     price: price,
-      //     description: description
-      //   },
-      //   errorMessage: 'Database operation failed, please try again.',
-      //   validationErrors: []
-      // });
-      // res.redirect('/500');
       const error = new Error(err);
       error.httpStatusCode = 500;
       return next(error);
@@ -134,6 +119,8 @@ exports.postEditProduct = (req, res, next) => {
 
   Product.findById(prodId)
     .then(product => {
+      // check to see if the user created the product to authorize if they can edit
+      // convert to string for type equality
       if (product.userId.toString() !== req.user._id.toString()) {
         return res.redirect('/');
       }
@@ -148,11 +135,12 @@ exports.postEditProduct = (req, res, next) => {
     })
     .catch(err => {
       const error = new Error(err);
+      console.log(err);
       error.httpStatusCode = 500;
       return next(error);
     });
 };
-
+// only find products that were created by the logged in user
 exports.getProducts = (req, res, next) => {
   Product.find({ userId: req.user._id })
     .then(products => {
@@ -172,6 +160,7 @@ exports.getProducts = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
+  // check to see is user created the product to authorize if they can delete
   Product.deleteOne({ _id: prodId, userId: req.user._id })
     .then(() => {
       console.log('DESTROYED PRODUCT');

@@ -3,6 +3,7 @@ const crypto = require('crypto'); // library that creates unique secure random v
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
+// import with destructor vlidation Result function to gather all errors
 const { validationResult } = require('express-validator');
 
 const User = require('../models/user');
@@ -29,6 +30,7 @@ exports.getLogin = (req, res, next) => {
     path: '/login',
     pageTitle: 'Login',
     errorMessage: message,
+    // set fields to empty when page launches
     oldInput: {
       email: '',
       password: ''
@@ -62,18 +64,20 @@ exports.postLogin = (req, res, next) => {
   // retrieve information from the request body
   const email = req.body.email;
   const password = req.body.password;
+  // construct error validations
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).render('auth/login', {
       path: '/login',
       pageTitle: 'Login',
       // flash message 
-      errorMessage: errors.array()[0].msg,
+      errorMessage: errors.array()[0].msg, // display first error of error array
+     // save user input for better user experience
       oldInput: {
         email: email,
         password: password
       },
-      validationErrors: errors.array()
+      validationErrors: errors.array() // return full array of errors
     });
   }
 // look at email field and see if value matches
@@ -84,6 +88,7 @@ exports.postLogin = (req, res, next) => {
           path: '/login',
           pageTitle: 'Login',
           errorMessage: 'Invalid email or password.',
+          // keep the user input for better user experience
           oldInput: {
             email: email,
             password: password
@@ -109,6 +114,7 @@ exports.postLogin = (req, res, next) => {
             path: '/login',
             pageTitle: 'Login',
             errorMessage: 'Invalid email or password.',
+                // keep the user input for better user experience
             oldInput: {
               email: email,
               password: password
@@ -131,20 +137,23 @@ exports.postLogin = (req, res, next) => {
 exports.postSignup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-// validate the user imput
+// validate the user imput and collect errors into errors object
   const errors = validationResult(req);
+  // call if empty method - true or false
   if (!errors.isEmpty()) {
-    console.log(errors.array());
+    console.log(errors.array()); // see errors in console log
+    // if not empty indicate validation failed with status 422
     return res.status(422).render('auth/signup', {
       path: '/signup',
       pageTitle: 'Signup',
-      errorMessage: errors.array()[0].msg,
+      errorMessage: errors.array()[0].msg, // ouput first error array of errors
+          // keep the user input for better user experience
       oldInput: {
         email: email,
         password: password,
         confirmPassword: req.body.confirmPassword
       },
-      validationErrors: errors.array()
+      validationErrors: errors.array() // return full array of errors
     });
   }
 
@@ -165,8 +174,8 @@ exports.postSignup = (req, res, next) => {
       res.redirect('/login');
       // create email to send after signup succeeds
       return transporter.sendMail({ 
-        to: email,
-        from:'tlock44@byui.edu',
+        to: req.body.email,
+        from: 'tlock44@byui.edu',
         subject: 'Signup successful!',
         html: '<h1> You successfully signed up!</h1>'
       });
@@ -244,7 +253,10 @@ exports.postReset = (req, res, next) => {
 };
 
 exports.getNewPassword = (req, res, next) => {
+  // see if there is a token
   const token = req.params.token;
+  // check if resetToken matches and the time is still valid within 1 hour
+  // $ gt stands for greater than
   User.findOne({ resetToken: token, resetTokenExpiration: { $gt: Date.now() } })
     .then(user => {
       let message = req.flash('error');
@@ -257,12 +269,14 @@ exports.getNewPassword = (req, res, next) => {
         path: '/new-password',
         pageTitle: 'New Password',
         errorMessage: message,
+        // pass new user id to new pawword form hidden for post request
         userId: user._id.toString(),
         passwordToken: token
       });
     })
     .catch(err => {
       const error = new Error(err);
+      console.log(err);
       error.httpStatusCode = 500;
       return next(error);
     });
@@ -270,10 +284,12 @@ exports.getNewPassword = (req, res, next) => {
 
 exports.postNewPassword = (req, res, next) => {
   const newPassword = req.body.password;
+  // retrieve userId from form
   const userId = req.body.userId;
+  // retrieve the specific token to ensure valid
   const passwordToken = req.body.passwordToken;
   let resetUser;
-
+// find user where reset token matches and within the timeframe allowed.
   User.findOne({
     resetToken: passwordToken,
     resetTokenExpiration: { $gt: Date.now() },
@@ -281,10 +297,13 @@ exports.postNewPassword = (req, res, next) => {
   })
     .then(user => {
       resetUser = user;
+      // hash the new password with bcrypt
       return bcrypt.hash(newPassword, 12);
     })
+    // store hashed password
     .then(hashedPassword => {
       resetUser.password = hashedPassword;
+      // the below no longer need to store values "undefined"
       resetUser.resetToken = undefined;
       resetUser.resetTokenExpiration = undefined;
       return resetUser.save();

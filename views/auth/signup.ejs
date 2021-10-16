@@ -10,9 +10,11 @@
         <% if (errorMessage) { %>
             <div class="user-message user-message--error"><%= errorMessage %></div>
         <% } %>
+        <!-- adding no validate to form just to check server side validation -->
         <form class="login-form" action="/signup" method="POST" novalidate>
             <div class="form-control">
                 <label for="email">E-Mail</label>
+                <!-- // set validation class for error array with an error of email -->
                 <input 
                     class="<%= validationErrors.find(e => e.param === 'email') ? 'invalid' : '' %>"
                     type="email" 
@@ -22,6 +24,7 @@
             </div>
             <div class="form-control">
                 <label for="password">Password</label>
+                     <!-- // set validation class for error array with an error of password -->
                 <input 
                     class="<%= validationErrors.find(e => e.param === 'password') ? 'invalid' : '' %>"
                     type="password" 
@@ -31,6 +34,7 @@
             </div>
             <div class="form-control">
                 <label for="confirmPassword">Confirm Password</label>
+                 <!-- // set validation class for error array with an error of confirmed password -->
                 <input 
                     class="<%= validationErrors.find(e => e.param === 'confirmPassword') ? 'invalid' : '' %>"
                     type="password" 
