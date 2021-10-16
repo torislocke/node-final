@@ -14,10 +14,10 @@
                 <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Products</a>
             </li>
                     <!-- only display this information if user is logged in -->
-            <% if (isAuthenticated) { %>
-                <li class="main-header__item">
-                    <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
-                </li>
+                    <% if (isAuthenticated) { %>
+                        <li class="main-header__item">
+                            <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
+                        </li>
                 <li class="main-header__item">
                     <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
                 </li>
@@ -29,7 +29,7 @@
                     <a class="<%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products">Admin Products
                     </a>
                 </li>
-            <% } %>
+                <% } %>
         </ul>
         <ul class="main-header__item-list">
                     <!-- only display this information if user is NOT logged in -->

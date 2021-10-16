@@ -61,7 +61,7 @@ app.use(
     store: store,
   })
 );
-
+// create mongoose user model based on data stored in session
 app.use((req, res, next) => {
   // if no user is logged in cannot add to cart');
   if (!req.session.user) {
@@ -73,7 +73,7 @@ app.use((req, res, next) => {
       if (!user) {
         return next();
       }
-      req.user = user;
+      req.user = user; // mongoose model user
       next();
     })
     .catch(err => {

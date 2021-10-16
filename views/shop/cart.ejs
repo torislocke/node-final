@@ -13,7 +13,6 @@
                             <h2>Quantity: <%= p.quantity %></h2>
                             <form action="/cart-delete-item" method="POST">
                                 <input type="hidden" value="<%= p.productId._id %>" name="productId">
-                                    <!-- csrf token must be added to call from app.js  -->
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                 <button class="btn danger" type="submit">Delete</button>
                             </form>
@@ -23,7 +22,6 @@
                 <hr>
                 <div class="centered">
                     <form action="/create-order" method="POST">
-                            <!-- csrf token must be added to call from app.js  -->
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <button type="submit" class="btn">Order Now!</button>
                     </form>

@@ -2,6 +2,7 @@ const path = require('path');
 
 const express = require('express');
 
+
 const shopController = require('../controllers/shop');
 // import middleware to determine if user is logged in or not
 const isAuth = require('../middleware/is-auth');

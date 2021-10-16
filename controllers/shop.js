@@ -1,10 +1,13 @@
 const Product = require('../models/product');
 const Order = require('../models/order');
 
+
+
+
 exports.getProducts = (req, res, next) => {
   Product.find()
     .then(products => {
-      console.log(products);
+      console.log('printing the getProducts results : ', products);
       res.render('shop/product-list', {
         prods: products,
         pageTitle: 'All Products',
@@ -50,7 +53,7 @@ exports.getIndex = (req, res, next) => {
       return next(error);
     });
 };
-
+// use mongoose populate to fetch need populate then chain execPopulate to retrieve promise
 exports.getCart = (req, res, next) => {
   req.user
     .populate('cart.items.productId')
@@ -77,7 +80,7 @@ exports.postCart = (req, res, next) => {
       return req.user.addToCart(product);
     })
     .then(result => {
-      console.log(result);
+      console.log('printing the post to cart results : ', result);
       res.redirect('/cart');
     })
     .catch(err => {

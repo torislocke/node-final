@@ -42,25 +42,25 @@ exports.getLogin = (req, res, next) => {
 exports.getSignup = (req, res, next) => {
   let message = req.flash('error');
     // if there is a message then retrieve it and flash on screen
-  if (message.length > 0) {
-    message = message[0];
-  } else {
-    message = null;
-  }
-  res.render('auth/signup', {
-    path: '/signup',
-    pageTitle: 'Signup',
-    errorMessage: message,
-    oldInput: {
-      email: '',
-      password: '',
-      confirmPassword: ''
-    },
-    validationErrors: []
-  });
-};
+    if (message.length > 0) {
+      message = message[0];
+    } else {
+      message = null;
+    }
+    res.render('auth/signup', {
+      path: '/signup',
+      pageTitle: 'Signup',
+      errorMessage: message,
+      oldInput: {
+        email: '',
+        password: '',
+        confirmPassword: ''
+      },
+      validationErrors: []
+    });
+  };
 
-exports.postLogin = (req, res, next) => {
+  exports.postLogin = (req, res, next) => {
   // retrieve information from the request body
   const email = req.body.email;
   const password = req.body.password;
@@ -73,21 +73,21 @@ exports.postLogin = (req, res, next) => {
       // flash message 
       errorMessage: errors.array()[0].msg, // display first error of error array
      // save user input for better user experience
-      oldInput: {
-        email: email,
-        password: password
-      },
-      validationErrors: errors.array() // return full array of errors
+     oldInput: {
+      email: email,
+      password: password
+    },
+    validationErrors: errors.array() // return full array of errors
     });
   }
 // look at email field and see if value matches
-  User.findOne({ email: email })
-    .then(user => {
-      if (!user) {
-        return res.status(422).render('auth/login', {
-          path: '/login',
-          pageTitle: 'Login',
-          errorMessage: 'Invalid email or password.',
+User.findOne({ email: email })
+.then(user => {
+  if (!user) {
+    return res.status(422).render('auth/login', {
+      path: '/login',
+      pageTitle: 'Login',
+      errorMessage: 'Invalid email or password.',
           // keep the user input for better user experience
           oldInput: {
             email: email,
@@ -102,6 +102,7 @@ exports.postLogin = (req, res, next) => {
         .then(doMatch => {
           if (doMatch) {
             req.session.isLoggedIn = true;
+            // req.session.user = user;
             req.session.user = user;
             // save the session to ensure no timing issue for redirect
             // redirect is fired independent of session being saved to mogo
@@ -115,30 +116,30 @@ exports.postLogin = (req, res, next) => {
             pageTitle: 'Login',
             errorMessage: 'Invalid email or password.',
                 // keep the user input for better user experience
-            oldInput: {
-              email: email,
-              password: password
-            },
-            validationErrors: []
-          });
+                oldInput: {
+                  email: email,
+                  password: password
+                },
+                validationErrors: []
+              });
+            })
+            .catch(err => {
+              console.log(err);
+              res.redirect('/login');
+            });
         })
         .catch(err => {
-          console.log(err);
-          res.redirect('/login');
+          const error = new Error(err);
+          error.httpStatusCode = 500;
+          return next(error);
         });
-    })
-    .catch(err => {
-      const error = new Error(err);
-      error.httpStatusCode = 500;
-      return next(error);
-    });
-};
+    };
 // retrieve email password and confirmed password after validation
 exports.postSignup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
 // validate the user imput and collect errors into errors object
-  const errors = validationResult(req);
+const errors = validationResult(req);
   // call if empty method - true or false
   if (!errors.isEmpty()) {
     console.log(errors.array()); // see errors in console log
@@ -148,18 +149,18 @@ exports.postSignup = (req, res, next) => {
       pageTitle: 'Signup',
       errorMessage: errors.array()[0].msg, // ouput first error array of errors
           // keep the user input for better user experience
-      oldInput: {
-        email: email,
-        password: password,
-        confirmPassword: req.body.confirmPassword
-      },
-      validationErrors: errors.array() // return full array of errors
-    });
-  }
+          oldInput: {
+            email: email,
+            password: password,
+            confirmPassword: req.body.confirmPassword
+          },
+          validationErrors: errors.array()
+        });
+      }
 
-  bcrypt
-    .hash(password, 12)
-    .then(hashedPassword => {
+      bcrypt
+      .hash(password, 12)
+      .then(hashedPassword => {
       // construct new user and store email, password
       const user = new User({
         email: email,
@@ -276,7 +277,6 @@ exports.getNewPassword = (req, res, next) => {
     })
     .catch(err => {
       const error = new Error(err);
-      console.log(err);
       error.httpStatusCode = 500;
       return next(error);
     });
@@ -290,13 +290,13 @@ exports.postNewPassword = (req, res, next) => {
   const passwordToken = req.body.passwordToken;
   let resetUser;
 // find user where reset token matches and within the timeframe allowed.
-  User.findOne({
-    resetToken: passwordToken,
-    resetTokenExpiration: { $gt: Date.now() },
-    _id: userId
-  })
-    .then(user => {
-      resetUser = user;
+User.findOne({
+  resetToken: passwordToken,
+  resetTokenExpiration: { $gt: Date.now() },
+  _id: userId
+})
+  .then(user => {
+    resetUser = user;
       // hash the new password with bcrypt
       return bcrypt.hash(newPassword, 12);
     })

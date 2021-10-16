@@ -1,6 +1,7 @@
 const path = require('path');
 
 const express = require('express');
+//import body function from express validator
 const { body } = require('express-validator');
 
 const adminController = require('../controllers/admin');
@@ -16,15 +17,16 @@ router.get('/add-product', isAuth, adminController.getAddProduct);
 // protect route through middleware to check if looged in or not
 router.get('/products', isAuth, adminController.getProducts);
 
-// /admin/add-product => POST
+// validate the steps of adding a product title, image url, price and description
 router.post(
   '/add-product',
   [
     body('title')
       .isString()
       .isLength({ min: 3 })
+      // remove excess white space at beginning or end of title
       .trim(),
-    body('imageUrl').isURL(),
+    body('imageUrl').isURL(), // built in validator
     body('price').isFloat(),
     body('description')
       .isLength({ min: 5, max: 400 })
@@ -41,7 +43,7 @@ router.post(
   '/edit-product',
   [
     body('title')
-      .isString()
+      .isString() // allows white space in title
       .isLength({ min: 3 })
       .trim(),
     body('imageUrl').isURL(),
