@@ -27,6 +27,7 @@
                                     </p>
                                 </div>
                                 <div class="card__actions">
+                                            <!-- only display this information if user is logged in -->
                                     <a href="/products/<%= product._id %>" class="btn">Details</a>
                                     <% if (isAuthenticated) { %>
                                         <%- include('../includes/add-to-cart.ejs', {product: product}) %>

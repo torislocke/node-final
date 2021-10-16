@@ -1,4 +1,4 @@
-const crypto = require('crypto');
+const crypto = require('crypto'); // library that creates unique secure random value
 
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
@@ -15,9 +15,11 @@ const transporter = nodemailer.createTransport(
     }
   })
 );
+// using connect flash display error message
 
 exports.getLogin = (req, res, next) => {
   let message = req.flash('error');
+  // if there is a message then retrieve it and flash on screen
   if (message.length > 0) {
     message = message[0];
   } else {
@@ -37,6 +39,7 @@ exports.getLogin = (req, res, next) => {
 
 exports.getSignup = (req, res, next) => {
   let message = req.flash('error');
+    // if there is a message then retrieve it and flash on screen
   if (message.length > 0) {
     message = message[0];
   } else {
@@ -56,14 +59,15 @@ exports.getSignup = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
+  // retrieve information from the request body
   const email = req.body.email;
   const password = req.body.password;
-
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).render('auth/login', {
       path: '/login',
       pageTitle: 'Login',
+      // flash message 
       errorMessage: errors.array()[0].msg,
       oldInput: {
         email: email,
@@ -72,7 +76,7 @@ exports.postLogin = (req, res, next) => {
       validationErrors: errors.array()
     });
   }
-
+// look at email field and see if value matches
   User.findOne({ email: email })
     .then(user => {
       if (!user) {
@@ -87,12 +91,15 @@ exports.postLogin = (req, res, next) => {
           validationErrors: []
         });
       }
+      // using bcrypt algorithm checked hashed password using bcrypt compare
       bcrypt
         .compare(password, user.password)
         .then(doMatch => {
           if (doMatch) {
             req.session.isLoggedIn = true;
             req.session.user = user;
+            // save the session to ensure no timing issue for redirect
+            // redirect is fired independent of session being saved to mogo
             return req.session.save(err => {
               console.log(err);
               res.redirect('/');
@@ -120,11 +127,11 @@ exports.postLogin = (req, res, next) => {
       return next(error);
     });
 };
-
+// retrieve email password and confirmed password after validation
 exports.postSignup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-
+// validate the user imput
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors.array());
@@ -144,15 +151,25 @@ exports.postSignup = (req, res, next) => {
   bcrypt
     .hash(password, 12)
     .then(hashedPassword => {
+      // construct new user and store email, password
       const user = new User({
         email: email,
         password: hashedPassword,
         cart: { items: [] }
       });
+      // save in database
       return user.save();
     })
+    // function following save to database redirects to login
     .then(result => {
       res.redirect('/login');
+      // create email to send after signup succeeds
+      return transporter.sendMail({ 
+        to: email,
+        from:'tlock44@byui.edu',
+        subject: 'Signup successful!',
+        html: '<h1> You successfully signed up!</h1>'
+      });
     })
     .catch(err => {
       const error = new Error(err);
@@ -167,14 +184,16 @@ exports.postLogout = (req, res, next) => {
     res.redirect('/');
   });
 };
-
+// render reset page 
 exports.getReset = (req, res, next) => {
   let message = req.flash('error');
+  // if there is an error display it
   if (message.length > 0) {
     message = message[0];
   } else {
     message = null;
   }
+  // response render if path
   res.render('auth/reset', {
     path: '/reset',
     pageTitle: 'Reset Password',
@@ -183,18 +202,23 @@ exports.getReset = (req, res, next) => {
 };
 
 exports.postReset = (req, res, next) => {
+  // using crypot to generate secure random bytes for reset
   crypto.randomBytes(32, (err, buffer) => {
     if (err) {
       console.log(err);
       return res.redirect('/reset');
     }
+    // if valid token create a token then convert hexidecimal to ascii
     const token = buffer.toString('hex');
+    // look in database for user email
     User.findOne({ email: req.body.email })
       .then(user => {
         if (!user) {
+          // use error key to flash message
           req.flash('error', 'No account with that email found.');
           return res.redirect('/reset');
         }
+        // retrieve user and set reset token and give one hour and update user in db
         user.resetToken = token;
         user.resetTokenExpiration = Date.now() + 3600000;
         return user.save();

@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf'); // cross site request forgery protection
-const flash = require('connect-flash');
+const flash = require('connect-flash'); // import 
 const cors = require('cors');
 
 
@@ -61,22 +61,13 @@ app.use(
     store: store,
   })
 );
-//after initialize the session enable CSRF protection
-
-app.use(csrfProtection);
-app.use(flash());
-// local variables passed into the views rendered verifies authentication and token
-app.use((req, res, next) => {
-  res.locals.isAuthenticated = req.session.isLoggedIn;
-  res.locals.csrfToken = req.csrfToken();
-  next();
-});
 
 app.use((req, res, next) => {
-  // throw new Error('Sync Dummy');
+  // if no user is logged in cannot add to cart');
   if (!req.session.user) {
     return next();
   }
+  // use session data - data the percists across requests with help of mongose model
   User.findById(req.session.user._id)
     .then(user => {
       if (!user) {
@@ -89,7 +80,19 @@ app.use((req, res, next) => {
       next(new Error(err));
     });
 });
+// place before routes
+//after initialize the session enable CSRF protection and connect flash
+app.use(csrfProtection);
+app.use(flash()); // call flash as function to use in app
+// local variables passed into the views rendered verifies authentication and token
+// passes is authenticated and CSRF token into all views
 
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
+// above must be before routes
 
 
 app.use("/admin", adminRoutes);
