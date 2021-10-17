@@ -11,8 +11,7 @@ const User = require('../models/user');
 const transporter = nodemailer.createTransport(
   sendgridTransport({
     auth: {
-      api_key:
-        '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'
+      api_key = process.env.API_KEY
     }
   })
 );
@@ -176,7 +175,7 @@ const errors = validationResult(req);
       // create email to send after signup succeeds
       return transporter.sendMail({ 
         to: req.body.email,
-        from: 'tlock44@byui.edu',
+        from = process.env.EMAIL,
         subject: 'Signup successful!',
         html: '<h1> You successfully signed up!</h1>'
       });
@@ -237,7 +236,7 @@ exports.postReset = (req, res, next) => {
         res.redirect('/');
         transporter.sendMail({
           to: req.body.email,
-          from: 'tlock44@byui.edu',
+          from = process.env.EMAIL,
           subject: 'Password reset',
           html: `
             <p>You requested a password reset</p>
