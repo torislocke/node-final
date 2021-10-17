@@ -8,8 +8,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf'); // cross site request forgery protection
 const flash = require('connect-flash'); // import 
 const cors = require('cors');
-require('dotenv').config();
-console.log(process.env);
+
 
 const errorController = require("./controllers/error");
 const User = require("./models/user");

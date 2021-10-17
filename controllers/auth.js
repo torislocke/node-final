@@ -6,6 +6,9 @@ const sendgridTransport = require('nodemailer-sendgrid-transport');
 // import with destructor vlidation Result function to gather all errors
 const { validationResult } = require('express-validator');
 
+require('dotenv').config();
+console.log(process.env);
+
 const User = require('../models/user');
 
 const transporter = nodemailer.createTransport(
