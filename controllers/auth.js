@@ -87,13 +87,13 @@ User.findOne({ email: email })
     return res.status(422).render('auth/login', {
       path: '/login',
       pageTitle: 'Login',
-      errorMessage: 'Invalid email or password.',
+      errorMessage: 'Invalid email address.',
           // keep the user input for better user experience
           oldInput: {
             email: email,
             password: password
           },
-          validationErrors: []
+          validationErrors: [{param: 'email', param: 'password'}]
         });
       }
       // using bcrypt algorithm checked hashed password using bcrypt compare
@@ -114,13 +114,13 @@ User.findOne({ email: email })
           return res.status(422).render('auth/login', {
             path: '/login',
             pageTitle: 'Login',
-            errorMessage: 'Invalid email or password.',
+            errorMessage: 'Invalid password.',
                 // keep the user input for better user experience
                 oldInput: {
                   email: email,
                   password: password
                 },
-                validationErrors: []
+                validationErrors: [{param: 'email', param: 'password'}]
               });
             })
             .catch(err => {
@@ -154,7 +154,7 @@ const errors = validationResult(req);
             password: password,
             confirmPassword: req.body.confirmPassword
           },
-          validationErrors: errors.array()
+          validationErrors: [{param: 'email', param: 'password', param: 'confirmPassword'}]
         });
       }
 

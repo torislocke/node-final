@@ -10,7 +10,8 @@
         <% if (errorMessage) { %>
             <div class="user-message user-message--error"><%= errorMessage %></div>
         <% } %>
-        <form class="login-form" action="/reset" method="POST">
+         <!-- remove html form validation with no validate to check server side validation -->
+        <form class="login-form" action="/reset" method="POST" novalidate>
             <div class="form-control">
                 <label for="email">E-Mail</label>
                 <input type="email" name="email" id="email">
