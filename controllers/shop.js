@@ -2,12 +2,10 @@ const Product = require('../models/product');
 const Order = require('../models/order');
 
 
-
-
 exports.getProducts = (req, res, next) => {
   Product.find()
     .then(products => {
-      console.log('printing the getProducts results : ', products);
+      console.log(products);
       res.render('shop/product-list', {
         prods: products,
         pageTitle: 'All Products',
@@ -18,8 +16,10 @@ exports.getProducts = (req, res, next) => {
       const error = new Error(err);
       error.httpStatusCode = 500;
       return next(error);
+  
     });
 };
+
 
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
@@ -35,6 +35,7 @@ exports.getProduct = (req, res, next) => {
       const error = new Error(err);
       error.httpStatusCode = 500;
       return next(error);
+    
     });
 };
 
@@ -51,6 +52,7 @@ exports.getIndex = (req, res, next) => {
       const error = new Error(err);
       error.httpStatusCode = 500;
       return next(error);
+
     });
 };
 // use mongoose populate to fetch need populate then chain execPopulate to retrieve promise
@@ -109,12 +111,15 @@ exports.postOrder = (req, res, next) => {
     .populate('cart.items.productId')
     .execPopulate()
     .then(user => {
+      console.log(user.cart.items);
+      // array of products map through all items
       const products = user.cart.items.map(i => {
+        // access .doc for mongoose object 
         return { quantity: i.quantity, product: { ...i.productId._doc } };
       });
       const order = new Order({
         user: {
-          email: req.user.email,
+          name: req.user.name,
           userId: req.user
         },
         products: products
@@ -133,7 +138,7 @@ exports.postOrder = (req, res, next) => {
       return next(error);
     });
 };
-
+// use order model to find all orders where user id matches
 exports.getOrders = (req, res, next) => {
   Order.find({ 'user.userId': req.user._id })
     .then(orders => {

@@ -2,6 +2,6 @@
 <form action="/cart" method="post">
     <!-- csrf token must be added to call from app.js  -->
     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <button class="btn" type="submit">Add to Cart</button>
+    <button class="btn card_button" type="submit">Add to Cart</button>
     <input type="hidden" name="productId" value="<%= product._id %>">
 </form>

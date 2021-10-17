@@ -31,98 +31,7 @@ form {
   height: 100%;
 }
 
-.main-header {
-  width: 100%;
-  height: 3.5rem;
-  background-color: #3e27d6;
-  padding: 0 1.5rem;
-  display: flex;
-  align-items: center;
-}
 
-.main-header__nav {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.main-header__item-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-}
-
-.main-header__item {
-  margin: 0 1rem;
-  padding: 0;
-}
-
-.main-header__item a,
-.main-header__item button {
-  font: inherit;
-  background: transparent;
-  border: none;
-  text-decoration: none;
-  color: white;
-  cursor: pointer;
-}
-
-.main-header__item a:hover,
-.main-header__item a:active,
-.main-header__item a.active,
-.main-header__item button:hover,
-.main-header__item button:active {
-  color: #ffeb3b;
-}
-
-.mobile-nav {
-  width: 30rem;
-  height: 100vh;
-  max-width: 90%;
-  position: fixed;
-  left: 0;
-  top: 0;
-  background: white;
-  z-index: 10;
-  padding: 2rem 1rem 1rem 2rem;
-  transform: translateX(-100%);
-  transition: transform 0.3s ease-out;
-}
-
-.mobile-nav.open {
-  transform: translateX(0);
-}
-
-.mobile-nav__item-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 0;
-}
-
-.mobile-nav__item {
-  margin: 1rem;
-  padding: 0;
-}
-
-.mobile-nav__item a {
-  text-decoration: none;
-  color: black;
-  font-size: 1.5rem;
-  padding: 0.5rem 2rem;
-}
-
-.mobile-nav__item a:active,
-.mobile-nav__item a:hover,
-.mobile-nav__item a.active {
-  background: #3e27d6;
-  color: white;
-  border-radius: 3px;
-}
 
 #side-menu-toggle {
   border: 1px solid white;
@@ -180,10 +89,30 @@ form {
 
 .card__image {
   width: 100%;
+  margin: auto;
+  text-align: center;
+  background: black;
+  padding-bottom: 1rem;
 }
 
 .card__image img {
-  width: 100%;
+  max-height: 300px;
+  width: auto;
+  border: 2px double white;
+  padding: .5em;
+
+}
+.card__header {
+  background: black;
+}
+.product__title {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: capitalize;
+  margin: 0px;
+  background: black;
 }
 
 .card__actions {
@@ -254,5 +183,10 @@ form {
   .user-message {
     width: 30rem;
   }
+}
+
+.right {
+  display: inline-flex;
+  justify-content: end;
 }
 

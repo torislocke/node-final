@@ -60,6 +60,7 @@ userSchema.methods.removeFromCart = function(productId) {
 };
 
 userSchema.methods.clearCart = function() {
+  // set to empty array of items to clear cart
   this.cart = { items: [] };
   return this.save();
 };

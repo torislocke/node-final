@@ -62,24 +62,9 @@ app.use(
   })
 );
 // create mongoose user model based on data stored in session
-app.use((req, res, next) => {
-  // if no user is logged in cannot add to cart');
-  if (!req.session.user) {
-    return next();
-  }
-  // use session data - data the percists across requests with help of mongose model
-  User.findById(req.session.user._id)
-    .then(user => {
-      if (!user) {
-        return next();
-      }
-      req.user = user; // mongoose model user
-      next();
-    })
-    .catch(err => {
-      next(new Error(err));
-    });
-});
+ // if no user is logged in cannot add to cart');
+   // use session data - data the percists across requests with help of mongose model
+
 // place before routes
 //after initialize the session enable CSRF protection and connect flash
 app.use(csrfProtection);
@@ -94,6 +79,22 @@ app.use((req, res, next) => {
 });
 // above must be before routes
 
+app.use((req, res, next) => {
+  if (!req.session.user) {
+    return next();
+  }
+  User.findById(req.session.user._id)
+    .then(user => {
+      if (!user) {
+        return next();
+      }
+      req.user = user; 
+      next();
+    })
+    .catch(err => {
+      next(new Error(err)); // inside asynch need next error
+    });
+}); 
 
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);

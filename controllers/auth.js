@@ -102,7 +102,6 @@ User.findOne({ email: email })
         .then(doMatch => {
           if (doMatch) {
             req.session.isLoggedIn = true;
-            // req.session.user = user;
             req.session.user = user;
             // save the session to ensure no timing issue for redirect
             // redirect is fired independent of session being saved to mogo
