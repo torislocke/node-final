@@ -7,15 +7,12 @@
                     class="fa fa-fw fa-home"></i>CSE341</a>
 
 
-            <a class="<%= path === '/' ? 'active' : '' %>" href="/">Shop</a>
+            <a class="<%= path === '/' ? 'active' : '' %>" href="/"><i class="fa fa-fw fa-shopping-bag"></i>Shop</a>
 
 
-            <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Products</a>
+            <!-- <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Products</a> -->
 
-            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-                <i class="fa fa-bars"></i>
-            </a>
-
+   
             <!-- only display this information if user is logged in -->
             <% if (isAuthenticated) { %>
 
@@ -50,12 +47,16 @@
 
                                 <form action="/logout" method="post">
                                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                    <button type="submit">Logout</button>
+                                    <button class="topnav-right" type="submit">Logout</button>
                                 </form>
 
                                 <% } %>
 
                         </div>
+                        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                            <i class="fa fa-bars"></i>
+                        </a>
+            
         </ul>
     </nav>
 

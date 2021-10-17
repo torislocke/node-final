@@ -19,6 +19,21 @@
     text-decoration: none;
     font-size: 17px;
   }
+  button.topnav-right {
+    margin-top: 10px;
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 17px;
+    padding-right: 5rem;
+    cursor: pointer;
+    width: 20px;
+    text-align: center;
+  }
+  button.topnav-right:hover {
+    border: 2px solid purple;
+
+  }
   
   .topnav a:hover {
     background-color: #ddd;
@@ -39,6 +54,11 @@
     float: right;
   }
   @media screen and (max-width: 600px) {
+    .topnav-right {
+      float: none;
+      display: block;
+      text-align: left;
+    }
     .topnav a:not(:first-child) {display: none;}
     .topnav a.icon {
       float: right;
