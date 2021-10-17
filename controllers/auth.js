@@ -6,15 +6,13 @@ const sendgridTransport = require('nodemailer-sendgrid-transport');
 // import with destructor vlidation Result function to gather all errors
 const { validationResult } = require('express-validator');
 
-require('dotenv').config();
-console.log(process.env);
-
 const User = require('../models/user');
 
 const transporter = nodemailer.createTransport(
   sendgridTransport({
     auth: {
-      api_key = process.env.API_KEY
+      api_key:
+        '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'
     }
   })
 );
@@ -178,7 +176,7 @@ const errors = validationResult(req);
       // create email to send after signup succeeds
       return transporter.sendMail({ 
         to: req.body.email,
-        from = process.env.EMAIL,
+        from: 'tlock44@byui.edu',
         subject: 'Signup successful!',
         html: '<h1> You successfully signed up!</h1>'
       });
@@ -239,7 +237,7 @@ exports.postReset = (req, res, next) => {
         res.redirect('/');
         transporter.sendMail({
           to: req.body.email,
-          from = process.env.EMAIL,
+          from: 'tlock44@byui.edu',
           subject: 'Password reset',
           html: `
             <p>You requested a password reset</p>

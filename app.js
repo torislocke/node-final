@@ -80,7 +80,6 @@ app.use((req, res, next) => {
       next(new Error(err));
     });
 });
-
 // place before routes
 //after initialize the session enable CSRF protection and connect flash
 app.use(csrfProtection);
