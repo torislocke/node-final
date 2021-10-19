@@ -37,7 +37,7 @@
 
                         <!-- only display this information if user is NOT logged in -->
                         <% if (!isAuthenticated) { %>
-                            <div class="topnav-right">
+                     
                                 <li><a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a></li>
 
 
@@ -51,6 +51,7 @@
                                     </form>
 
                                     <% } %>
+                            
             </ul>
 
         </nav>

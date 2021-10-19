@@ -69,7 +69,8 @@ body {
   padding: 0;
 }
 
-.container .navbar ul li a {
+.container .navbar ul li a,
+.topnav-right-button {
   text-decoration: none;
   color: #999999;
   font-size: 14px;
@@ -118,6 +119,12 @@ body {
 .container .navbar .icon-bar i {
   background-color: #ffffff;
   height: 2px;
+}
+.topnav-right-button {
+  border: none;
+  background: transparent;
+  text-decoration: none;
+
 }
 
 @media only screen and (max-width: 650px) {
@@ -201,16 +208,22 @@ text-align: center;
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 5rem;           
+  height: 7rem;           
 }
 
 /* Home Page ---- carousel for homepage */
 .carousel-outer-container {
   margin: 0;
-  margin-top: -11rem;
+  margin-top: 2rem;
   text-align: center;
   font-family: sans-serif;
   color: #fefefe;
+}
+
+@media (min-width: 768px) {
+.carousel-outer-container {
+  margin-top: -11rem;
+}
 }
 
 .carousel-container {
@@ -443,6 +456,14 @@ span {
   margin-top: 3rem;
   text-decoration: none;
   text-align: center;
+}
+.centered-foot {
+  display: block;
+  margin: auto;
+  text-decoration: none;
+  text-align: center;
+  color: white;
+  margin-top: -1rem;
 }
 
 .form-control {
