@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport(
   sendgridTransport({
     auth: {
       api_key:
-        'cannot show on public account'
+        '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'
     }
   })
 );
@@ -175,7 +175,7 @@ const errors = validationResult(req);
       // create email to send after signup succeeds
       return transporter.sendMail({ 
         to: req.body.email,
-        from: 'do not show in public view',
+        from: 'tlock44@byui.edu',
         subject: 'Signup successful!',
         html: '<h1> You successfully signed up!</h1>'
       });
@@ -236,7 +236,7 @@ exports.postReset = (req, res, next) => {
         res.redirect('/');
         transporter.sendMail({
           to: req.body.email,
-          from: 'do not show in public view',
+          from: 'tlock44@byui.edu',
           subject: 'Password reset',
           html: `
             <p>You requested a password reset</p>
