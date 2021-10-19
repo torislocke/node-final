@@ -1,58 +1,62 @@
 <header class="main-header">
 
-    <nav class="topnav" id="myTopnav">
-               <a class="cseCourse" href="https://node-application-one.herokuapp.com/">CSE341</a>
+    <div class="container">
+        <div class="logo">
+            <a href="#"><img src="../../public/images/logo_ecommerce.png" alt="logo"></a>
+        </div>
+        <nav class="navbar" id="myTopnav">
+            <div class="icon-bar" onclick="Show()">
+                <i></i>
+                <i></i>
+                <i></i>
+            </div>
+            <ul id="nav-lists">
+                <li class="close"><span onclick="Hide()">×</span></li>
+                <li><a class="<%= path === '/' ? 'active' : '' %>" href="/">Home</a></li>
 
 
-            <a class="<%= path === '/' ? 'active' : '' %>" href="/">Home</a>
+                <li><a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Books</a></li>
 
 
-            <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Books</a>
+                <!-- only display this information if user is logged in -->
+                <% if (isAuthenticated) { %>
 
-   
-            <!-- only display this information if user is logged in -->
-            <% if (isAuthenticated) { %>
-
-                <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
+                    <li><a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a></li>
 
 
-                <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
+                    <li><a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a></li>
 
 
-                <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add
-                   Book
-                </a>
+                    <li><a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add
+                            Book
+                        </a></li>
 
 
-                <a class="<%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products">Admin Books
-                </a>
+                    <li><a class="<%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products">Admin Books
+                        </a></li>
 
-                <% } %>
-
-
-                    <!-- only display this information if user is NOT logged in -->
-                    <% if (!isAuthenticated) { %>
-                        <div class="topnav-right">
-                            <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+                    <% } %>
 
 
-                            <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
+                        <!-- only display this information if user is NOT logged in -->
+                        <% if (!isAuthenticated) { %>
+                            <div class="topnav-right">
+                                <li><a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a></li>
 
-                            <% } else { %>
-                                <!-- show logout if user is logged in -->
 
-                                <form action="/logout" method="post">
-                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                    <button class="topnav-right-button" type="submit">Logout</button>
-                                </form>
+                                <li><a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a></li>
+                                <% } else { %>
+                                    <!-- show logout if user is logged in -->
 
-                                <% } %>
+                                    <form action="/logout" method="post">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <button class="topnav-right-button" type="submit">Logout</button>
+                                    </form>
 
-                        </div>
-                        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-                            <i class="fa fa-bars"></i>
-                        </a>
-            
+                                    <% } %>
+            </ul>
+
         </nav>
+    </div>
 
 </header>
