@@ -4,7 +4,8 @@
     <body>
         <%- include('../includes/navigation.ejs') %>
             <main class="centered">
-                <div id="content-wrap">
+                <section class="content-wrap detail">
+                    <div class="col1">
                     <h1>
                         <%= product.title %>
                     </h1>
@@ -12,6 +13,8 @@
                     <div class="image">
                         <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
                     </div>
+                    </div>
+                    <div class="col2">
                     <h2>
                         <%= product.price %>
                     </h2>
@@ -22,5 +25,6 @@
                         <%- include('../includes/add-to-cart.ejs', {product: product}) %>
                             <% } %>
                 </div>
+            </section>
             </main>
             <%- include('../includes/end.ejs') %>

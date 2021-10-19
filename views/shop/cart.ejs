@@ -1,12 +1,12 @@
 <%- include('../includes/head.ejs') %>
-<link rel="stylesheet" href="../../public/css/cart.css">
+
 
     </head>
 
     <body>
         <%- include('../includes/navigation.ejs') %>
             <main>
-                <div id="content-wrap">
+                <div id="content-wrap cart">
                     <% if (products.length> 0) { %>
                         <ul class="cart__item-list">
                             <% products.forEach(p=> { %>
@@ -24,7 +24,7 @@
                                 </li>
                                 <% }) %>
                         </ul>
-                        <hr>
+                      
                         <div class="centered all">
                             <form action="/create-order" method="POST">
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
