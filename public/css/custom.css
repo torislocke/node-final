@@ -380,6 +380,7 @@ footer {
   background-color: transparent; 
   border: 1px solid #f1f1f1;
  perspective: 800px;  
+ overflow: hidden;
 }
 
 /* This container is needed to position the front and back side */
@@ -394,6 +395,7 @@ footer {
   transform-style: preserve-3d;
   border: 7px double grey;
   padding: 3em;
+ 
 }
 
 /* Do an horizontal flip when you move the mouse over the flip box container */
