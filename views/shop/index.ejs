@@ -1,40 +1,38 @@
 <%- include('../includes/head.ejs') %>
-<link rel="stylesheet" href="/css/product.css">
+    <link rel="stylesheet" href="/css/product.css">
 
-</head>
+    </head>
 
-<body>
+    <body>
 
-    <%- include('../includes/navigation.ejs') %>
+        <%- include('../includes/navigation.ejs') %>
 
-    <main>
-        <% if (prods.length > 0) { %>
-            <div class="grid">
-                <% for (let product of prods) { %>
-                    <article class="card product-item">
-                        <header class="card__header">
-                            <h1 class="product__title"><%= product.title %></h1>
-                        </header>
-                        <div class="card__image">
-                            <img src="<%= product.imageUrl %>"
-                                alt="<%= product.title %>">
+            <main>
+                <div id="content-wrap">
+                    <section class="carousel-outer-container">
+                        <div class="carousel-container">
+                            <div class="carousel">
+                                <div class="carousel__face"><span><a class="carousel-link" href="/products">Cook
+                                            Books</a></span></div>
+                                <div class="carousel__face"><span><a class="carousel-link" href="/products">Childrens
+                                            Books</a></span></div>
+                                <div class="carousel__face"><span><a class="carousel-link" href="/products">Circle Award
+                                            Winners</a></span></div>
+                                <div class="carousel__face"><span><a class="carousel-link" href="/products">Mystery |
+                                            Thriller</a></span></div>
+                                <div class="carousel__face"><span><a class="carousel-link"
+                                            href="/products">Travel</a></span></div>
+                                <div class="carousel__face"><span><a class="carousel-link" href="/products">Art |
+                                            Photography</a></span></div>
+                                <div class="carousel__face"><span><a class="carousel-link" href="/products">Business |
+                                            Leadership</a></span></div>
+                                <div class="carousel__face"><span><a class="carousel-link" href="/products">Literature |
+                                            Fiction</a></span></div>
+                                <div class="carousel__face"><span><a class="carousel-link" href="/products">Crafts |
+                                            Hobbies</a></span></div>
+                            </div>
                         </div>
-                        <div class="card__content">
-                            <h2 class="product__price">$<%= product.price %></h2>
-                            <p class="product__description"><%= product.description %></p>
-                        </div>
-                        <div class="card__actions">
-                                    <!-- only display this information if user is logged in -->
-                            <a href="/products/<%= product._id %>" class="btn card_button">Details</a>
-                            <% if (isAuthenticated) { %>
-                                <%- include('../includes/add-to-cart.ejs', {product: product}) %>
-                            <% } %>
-                        </div>
-                    </article>
-                <% } %>
-            </div>
-        <% } else { %>
-            <h1>No Products Found!</h1>
-        <% } %>
-    </main>
-<%- include('../includes/end.ejs') %>
+                    </section>
+                </div>
+            </main>
+            <%- include('../includes/end.ejs') %>

@@ -5,19 +5,24 @@
 
     <body class="errorPage">
         <%- include('includes/navigation.ejs') %>
-            <div class="jumbotron text-center" id="errorPage">
-                <div class="container errorContainer">
-                    <h1 id="errorTitle">
-                        <%= pageTitle %>
-                    </h1>
-                    <p>The page you are looking for <%= path %> can't be found.</p>
-                    <div class="homePage-link">
-                        <form action="/" method="get">
-                            <button type="submit" id="homePage-button" class="glow-on-hover">GO TO HOME PAGE</button>
-                        </form>
+            <main>
+                <div id="content-wrap">
+                    <div class="jumbotron text-center" id="errorPage">
+                        <div class="container errorContainer">
+                            <h1 id="errorTitle">
+                                <%= pageTitle %>
+                            </h1>
+                            <p>The page you are looking for <%= path %> can't be found.</p>
+                            <div class="homePage-link">
+                                <form action="/" method="get">
+                                    <button type="submit" id="homePage-button" class="glow-on-hover">GO TO HOME
+                                        PAGE</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </main>
 
 
             <%- include('includes/end.ejs') %>

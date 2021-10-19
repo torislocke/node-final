@@ -1,14 +1,13 @@
 <header class="main-header">
 
     <nav class="topnav" id="myTopnav">
-               <a class="cseCourse" href="https://node-application-one.herokuapp.com/"><i
-                    class="fa fa-fw fa-home"></i>CSE341</a>
+               <a class="cseCourse" href="https://node-application-one.herokuapp.com/">CSE341</a>
 
 
-            <a class="<%= path === '/' ? 'active' : '' %>" href="/"><i class="fa fa-fw fa-shopping-bag"></i>Shop</a>
+            <a class="<%= path === '/' ? 'active' : '' %>" href="/">Home</a>
 
 
-            <!-- <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Products</a> -->
+            <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Books</a>
 
    
             <!-- only display this information if user is logged in -->
@@ -21,11 +20,11 @@
 
 
                 <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add
-                    Product
+                   Book
                 </a>
 
 
-                <a class="<%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products">Admin Products
+                <a class="<%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products">Admin Books
                 </a>
 
                 <% } %>
@@ -34,8 +33,7 @@
                     <!-- only display this information if user is NOT logged in -->
                     <% if (!isAuthenticated) { %>
                         <div class="topnav-right">
-                            <a class="<%= path === '/login' ? 'active' : '' %>" href="/login"><i
-                                    class="fa fa-fw fa-user"></i>Login</a>
+                            <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
 
 
                             <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
@@ -45,7 +43,7 @@
 
                                 <form action="/logout" method="post">
                                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                    <button class="topnav-right" type="submit">Logout</button>
+                                    <button class="topnav-right-button" type="submit">Logout</button>
                                 </form>
 
                                 <% } %>
