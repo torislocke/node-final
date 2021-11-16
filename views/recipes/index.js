@@ -9,9 +9,9 @@
             <main>
        
 			<section>
-				<div class="containerR initial">
+				<div class="container initial">
 					<h1 class="searchTitle">Recipe Search</h1>
-					<form class="recipeForm">
+					<form>
 						<input
 							class="searchInput"
 							type="text"
@@ -26,5 +26,4 @@
      
     </main>
 
-<script src="/js/recipesAPI.js"></script>
     <%- include('../includes/end.ejs') %>

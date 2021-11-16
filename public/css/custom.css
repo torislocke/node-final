@@ -611,12 +611,6 @@ span {
   text-align: center;
 }
 
-.product__price {
-  text-align: center;
-  color: darkgray;
-  margin-bottom: 0.5rem;
-}
-
 .product__description {
   text-align: center;
 }

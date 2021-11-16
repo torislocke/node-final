@@ -17,7 +17,7 @@ router.get('/add-product', isAuth, adminController.getAddProduct);
 // protect route through middleware to check if looged in or not
 router.get('/products', isAuth, adminController.getProducts);
 
-// validate the steps of adding a product title, image url, price and description
+// validate the steps of adding a product title, image url, description
 router.post(
   '/add-product',
   [
@@ -27,7 +27,6 @@ router.post(
       // remove excess white space at beginning or end of title
       .trim(),
     body('imageUrl').isURL(), // built in validator
-    body('price').isFloat(),
     body('description')
       .isLength({ min: 5, max: 400 })
       .trim()
@@ -47,7 +46,6 @@ router.post(
       .isLength({ min: 3 })
       .trim(),
     body('imageUrl').isURL(),
-    body('price').isFloat(),
     body('description')
       .isLength({ min: 5, max: 400 })
       .trim()

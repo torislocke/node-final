@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 5000;
 
 // connect to Mongo Database
 const MONGODB_URI =
-  "mongodb+srv://tlocke:MongoDB12@cluster0.sd8ux.mongodb.net/ecommerce?retryWrites=true&w=majority";
+  "mongodb+srv://tbox:MongoDB12@cluster0.iuae0.mongodb.net/final-project?retryWrites=true&w=majority";
 
   const app = express();
 // add another collection call sessions
@@ -29,7 +29,7 @@ const store = new MongoDBStore({
 const csrfProtection = csrf(); // use default settings
 
 const corsOptions = {
-  origin: "https://ecommerce-functional.herokuapp.com/",
+  origin: "https://cse341-final-project-team-6.herokuapp.com/",
   optionsSuccessStatus: 200
 };
 

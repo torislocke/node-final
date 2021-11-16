@@ -1,21 +1,24 @@
 const crypto = require('crypto'); // library that creates unique secure random value
 
 const bcrypt = require('bcryptjs');
-const nodemailer = require('nodemailer');
-const sendgridTransport = require('nodemailer-sendgrid-transport');
+// const nodemailer = require('nodemailer');
+// const sendgridTransport = require('nodemailer-sendgrid-transport');
+// const nodemailerSendgrid = require('nodemailer-sendgrid');
 // import with destructor vlidation Result function to gather all errors
 const { validationResult } = require('express-validator');
 
 const User = require('../models/user');
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const transporter = nodemailer.createTransport(
-  sendgridTransport({
-    auth: {
-      api_key:
-        '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'
-    }
-  })
-);
+// const transporter = nodemailer.createTransport(
+//   sendgridTransport({
+//     auth: {
+//       api_key: process.env.SENDGRID_API_KEY
+        
+//     }
+//   })
+// );
 // using connect flash display error message
 
 exports.getLogin = (req, res, next) => {
@@ -173,12 +176,12 @@ const errors = validationResult(req);
     .then(result => {
       res.redirect('/login');
       // create email to send after signup succeeds
-      return transporter.sendMail({ 
+     const msg = {
         to: req.body.email,
         from: 'tlock44@byui.edu',
         subject: 'Signup successful!',
         html: '<h1> You successfully signed up!</h1>'
-      });
+      };
     })
     .catch(err => {
       const error = new Error(err);
@@ -234,22 +237,22 @@ exports.postReset = (req, res, next) => {
       })
       .then(result => {
         res.redirect('/');
-        transporter.sendMail({
+        const msg = {
           to: req.body.email,
           from: 'tlock44@byui.edu',
           subject: 'Password reset',
           html: `
             <p>You requested a password reset</p>
-            <p>Click this <a href=""https://ecommerce-functional.herokuapp.com/reset/${token}">link</a> to set a new password.</p>
+            <p>Click this <a href="https://cse341-final-project-team-6.herokuapp.com/reset/${token}">link</a> to set a new password.</p>
           `
-        });
+        };
       })
       .catch(err => {
         const error = new Error(err);
         error.httpStatusCode = 500;
         return next(error);
       });
-  });
+  })
 };
 
 exports.getNewPassword = (req, res, next) => {
