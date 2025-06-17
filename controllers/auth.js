@@ -1,9 +1,9 @@
 const crypto = require('crypto'); // library that creates unique secure random value
 
 const bcrypt = require('bcryptjs');
-// const nodemailer = require('nodemailer');
-// const sendgridTransport = require('nodemailer-sendgrid-transport');
-// const nodemailerSendgrid = require('nodemailer-sendgrid');
+const nodemailer = require('nodemailer');
+const sendgridTransport = require('nodemailer-sendgrid-transport');
+const nodemailerSendgrid = require('nodemailer-sendgrid');
 // import with destructor vlidation Result function to gather all errors
 const { validationResult } = require('express-validator');
 
@@ -11,14 +11,14 @@ const User = require('../models/user');
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-// const transporter = nodemailer.createTransport(
-//   sendgridTransport({
-//     auth: {
-//       api_key: process.env.SENDGRID_API_KEY
+const transporter = nodemailer.createTransport(
+  sendgridTransport({
+    auth: {
+      api_key: process.env.SENDGRID_API_KEY
         
-//     }
-//   })
-// );
+    }
+  })
+);
 // using connect flash display error message
 
 exports.getLogin = (req, res, next) => {
